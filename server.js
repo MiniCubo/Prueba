@@ -32,6 +32,7 @@ app.use(
         console.log("Allowed");
         callback(null, true);
       } else {
+        console.log("Not Allowed");
         callback(new Error("Not allowed by CORS"));
       }
     },
