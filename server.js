@@ -22,6 +22,7 @@ app.set("view engine", "ejs");
 const allowedOrigins = [
   "http://localhost:3000", // Frontend en desarrollo
   "https://healthyminds-front.onrender.com", // Frontend en producción
+  "https://healthyminds-uj66.onrender.com",
 ];
 
 app.use(
@@ -229,7 +230,14 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'build'),
+{
+  setHeaders: (res, path) => {
+    if (path.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css');
+    }
+  }
+}));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });

@@ -19,7 +19,7 @@ const Home = () => {
       .then((response) => {
         if (!response.ok) {
           if (response.status === 401) {
-            // window.location.href = "/login";
+            window.location.href = "/login";
           }
           throw new Error("Error fetching session");
         }
