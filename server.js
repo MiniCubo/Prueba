@@ -1,7 +1,6 @@
 require("dotenv").config();
 const explicitWords = require('./bad-words.json');
 
-
 const cors = require('cors');
 const express = require("express");
 const fs = require("fs");
