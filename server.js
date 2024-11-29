@@ -41,13 +41,13 @@ console.log(process.env.SESSION_SECRET)
 // Configuración de sesiones
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "your-secret-key",
+    secret: process.env.SESSION_SECRET || "default-secret-key", // Cambia esto en producción
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: process.env.NODE_ENV === "production", // Solo se envían en HTTPS
-      httpOnly: true, // Protege las cookies contra acceso por JavaScript
-      sameSite: "none", // Necesario para solicitudes cruzadas
+      secure: process.env.NODE_ENV === "production", // Solo HTTPS en producción
+      httpOnly: true, // Protege las cookies de JavaScript
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // "none" en producción, "lax" en desarrollo
     },
   })
 );
@@ -84,9 +84,7 @@ app.post("/register", async (req, res) => {
     const existingUser = await User.findOne({ name });
 
     if (existingUser) {
-      return res.status(400).render("register", {
-        errorMessage: "Error: User already exists",
-      });
+      return res.status(400);
     }
 
     const newUser = new User({ name, password });
