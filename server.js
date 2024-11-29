@@ -48,7 +48,7 @@ app.use(
     cookie: {
       secure: process.env.NODE_ENV === "production", // Solo HTTPS en producción
       httpOnly: true, // Protege las cookies de JavaScript
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // "none" en producción, "lax" en desarrollo
+      sameSite: "lax" , // "none" en producción, "lax" en desarrollo
     },
   })
 );
@@ -168,6 +168,7 @@ app.post("/create-post", async (req, res) => {
 
 app.get("/", (req, res) => {
   const username = req.session.username;
+  console.log(username);
   if (!username) {
     return res.status(401).json({ message: "Unauthorized: Please log in." });
   }
