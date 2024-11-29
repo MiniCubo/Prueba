@@ -28,6 +28,7 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
+      console.log(origin);
       if (!origin || allowedOrigins.includes(origin)) {
         console.log("Allowed");
         callback(null, true);
@@ -170,6 +171,7 @@ app.post("/create-post", async (req, res) => {
 
 app.get("/", (req, res) => {
   const username = req.session.username;
+  console.log(username);
   if (!username) {
     return res.status(401).json({ message: "Unauthorized: Please log in." });
   }
