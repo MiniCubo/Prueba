@@ -46,7 +46,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: process.env.NODE_ENV === "production", // Solo HTTPS en producción
+      secure: false, // Solo HTTPS en producción
       httpOnly: true, // Protege las cookies de JavaScript
       sameSite: "lax" , // "none" en producción, "lax" en desarrollo
     },
@@ -168,7 +168,6 @@ app.post("/create-post", async (req, res) => {
 
 app.get("/", (req, res) => {
   const username = req.session.username;
-  console.log(username);
   if (!username) {
     return res.status(401).json({ message: "Unauthorized: Please log in." });
   }
